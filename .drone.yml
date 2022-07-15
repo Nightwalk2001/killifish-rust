@@ -1,0 +1,8 @@
+kind: pipeline
+name: rust-build
+load: none
+steps:
+  - name: release
+    image: rust
+    commands:
+      - Cargo run --release
