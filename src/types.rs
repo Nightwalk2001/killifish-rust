@@ -1,6 +1,8 @@
 use std::sync::Arc;
+
 use axum::Extension;
 use mongodb::Collection;
+
 use crate::errors::AppError;
 use crate::mongo::{Person, Recording, Todo};
 

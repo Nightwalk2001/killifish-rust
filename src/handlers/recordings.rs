@@ -1,13 +1,15 @@
 use std::ops::Sub;
-use axum::{Json, Router, extract::Query, routing::{get}};
+
+use axum::{extract::Query, Json, Router, routing::get};
 use axum::extract::Path;
 use bson::{doc, Document};
 use chrono::{Duration, Utc};
 use futures::StreamExt;
 use mongodb::options::{CountOptions, FindOptions};
+use serde::{Deserialize, Serialize};
+
 use crate::mongo::Recording;
 use crate::types::{ApiResult, SharedRecordings};
-use serde::{Serialize, Deserialize};
 
 pub fn router() -> Router {
     Router::new()

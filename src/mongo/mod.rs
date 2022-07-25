@@ -1,18 +1,21 @@
 use std::sync::Arc;
+
 use chrono::{DateTime, Utc};
-use serde::{Serialize, Deserialize};
 use mongodb::{Client, Collection};
 use mongodb::options::ClientOptions;
+use serde::{Deserialize, Serialize};
+
 use crate::types::HandledResult;
 
-const MONGO_URI: &str = "mongodb://killifish:Wzw20010827@120.25.246.58:17017";
+const MONGO_URI: &str = "mongodb://killifish:Wzw20010827@81.71.138.9:17017";
 
 #[derive(Serialize, Deserialize)]
 pub struct Person {
     pub name: String,
     pub password: String,
     pub email: String,
-    pub role: String,
+    #[serde(rename = "isManager")]
+    pub is_manager: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     label: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -39,6 +42,7 @@ pub struct Recording {
 pub struct Todo {
     pub(crate) creator: String,
     pub(crate) content: String,
+    #[serde(rename = "createAt")]
     pub(crate) create_at: DateTime<Utc>,
 }
 

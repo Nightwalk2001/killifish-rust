@@ -18,7 +18,8 @@
 //     }
 // }
 
-use axum::{extract::{FromRequest, RequestParts}, async_trait};
+use axum::{async_trait, extract::{FromRequest, RequestParts}};
+
 use crate::errors::AppError;
 use crate::mongo::Person;
 

@@ -3,7 +3,8 @@ use axum::routing::{get, post};
 use bson::doc;
 use futures::StreamExt;
 use mongodb::results::InsertOneResult;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::errors::AppError;
 use crate::jwt::issue;
 use crate::mongo::Person;
@@ -34,7 +35,7 @@ struct SigninReqBody {
 #[derive(Serialize)]
 struct SigninRes {
     name: String,
-    role: String,
+    isManager: bool,
     token: String,
 }
 
@@ -52,7 +53,7 @@ async fn signin(
 
     Ok(Json(SigninRes {
         name,
-        role: person.role,
+        isManager: person.is_manager,
         token,
     }))
 }

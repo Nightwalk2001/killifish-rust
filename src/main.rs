@@ -1,10 +1,12 @@
 use std::net::SocketAddr;
+
 use axum::Extension;
 use axum::http::header::{AUTHORIZATION, CONTENT_TYPE};
 use axum::http::Method;
 use tower_http::cors::{AllowOrigin, CorsLayer};
-use types::HandledResult;
+
 use handlers::{persons, recordings, todos};
+use types::HandledResult;
 
 pub mod mongo;
 pub mod handlers;

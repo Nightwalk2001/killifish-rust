@@ -1,10 +1,12 @@
 use std::ops::Add;
+
 use chrono::{DateTime, Duration, Utc};
 use jsonwebtoken::{decode, DecodingKey, encode, EncodingKey, Header, Validation};
 use jsonwebtoken::errors::Error;
 use mongodb::options::ReadConcernLevel::Local;
 use once_cell::sync::Lazy;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+
 use crate::errors::AppError;
 use crate::mongo::Person;
 
@@ -30,7 +32,8 @@ static KEYS: Lazy<Keys> = Lazy::new(|| {
 #[derive(Serialize, Deserialize)]
 pub struct Claim {
     pub sub: String,
-    pub role: String,
+    #[serde(rename = "isManager")]
+    pub is_manager: bool,
     pub iat: DateTime<Utc>,
     pub exp: DateTime<Utc>,
 }
@@ -41,7 +44,7 @@ pub fn issue(person: &Person) -> String {
 
     let claim = Claim {
         sub: person.name.to_string(),
-        role: person.role.to_string(),
+        is_manager: person.is_manager,
         iat,
         exp,
     };
@@ -63,5 +66,5 @@ fn verify(token: String) -> bool {
 
     let now = Utc::now();
 
-    c.exp.lt(&now) && c.role.eq("admin")
+    c.exp < now && c.is_manager
 }

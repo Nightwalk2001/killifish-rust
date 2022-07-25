@@ -3,9 +3,10 @@ use axum::routing::{get, post};
 use chrono::Utc;
 use futures::StreamExt;
 use mongodb::results::InsertOneResult;
+use serde::Deserialize;
+
 use crate::mongo::Todo;
 use crate::types::{ApiResult, SharedTodos};
-use serde::Deserialize;
 
 pub fn router() -> Router {
     Router::new()
